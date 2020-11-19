@@ -9,8 +9,10 @@
     </style>
   </head>
   <body>
-    <script src="../node_modules/three/build/three.js"></script>
-    <script>
+<!--    <script src="../node_modules/three/build/three.js"></script> -->
+<script>
+
+
       const scene = new THREE.Scene()
       const camera = new THREE.PerspectiveCamera(75,
                                                  window.innerWidth / window.innerHeight,
@@ -20,16 +22,29 @@
       renderer.setSize(window.innerWidth, window.innerHeight)
       document.body.appendChild(renderer.domElement)
 
-      const geometry = new THREE.BoxGeometry()
-      const material = new THREE.MeshBasicMaterial({color: 0x00ff00})
-      const cube = new THREE.Mesh(geometry, material)
-      scene.add(cube)
+
+      const half_lens_geometry = new THREE.SphereBufferGeometry(2, 32, 16,
+                                                                0, Math.PI * 2,
+                                                                0, 0.5)
+      const other_half_geometry = half_lens_geometry.clone()
+      other_half_geometry.rotateX(Math.PI)
+      other_half_geometry.translate(0, -0.5, 0)
+
+      const lens_geometry = THREE.BufferGeometryUtils.mergeBufferGeometries([
+        half_lens_geometry, other_half_geometry])
+
+      const material = new THREE.MeshBasicMaterial({color: 0xaaffcc})
+      material.side = THREE.DoubleSide
+      const lens = new THREE.Mesh(lens_geometry, material)
+
+      scene.add(lens)
 
       camera.position.z = 5
+      camera.lookAt(0, 0, 0)
 
       function animate() {
-        cube.rotation.x += 0.1
-        cube.rotation.y += 0.1
+        lens.rotation.x += 0.01
+        lens.rotation.y += 0.01
 
         requestAnimationFrame(animate)
         renderer.render(scene, camera)
