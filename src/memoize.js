@@ -10,12 +10,14 @@ function memoize(self, maykr_name) {
   }
 
   let definer = function() {
-    value = maykr()
+    value = maykr.apply(self)
 
     self[maykr_name] = returner
 
-    return vale
+    return value
   }
+
+  self[maykr_name] = definer
 }
 
 export default memoize
