@@ -20,6 +20,7 @@ import { Scene,
 // import { DoubleSide } from '../node_modules/three/src/constants.js'
 
 import Lens from './lens.js'
+import Teapot from './teapot.js'
 
 let Demo = (function() {
   const scene = new Scene()
@@ -33,6 +34,13 @@ let Demo = (function() {
   scene.add(top_light)
 
   scene.add(top_light.target)
+
+  const shadow_dist = 20
+
+  top_light.shadow.camera.left = -shadow_dist
+  top_light.shadow.camera.right = shadow_dist
+  top_light.shadow.camera.top = shadow_dist
+  top_light.shadow.camera.bottom = -shadow_dist
 
   const plane_mesh = new PlaneBufferGeometry(10000, 10000)
   const plane_mat = new MeshStandardMaterial({color: 0x608040,
@@ -55,7 +63,12 @@ let Demo = (function() {
 
   const lens = new Lens(scene, renderer)
   lens.add()
+
+  const teapot = new Teapot(scene, renderer)
+  teapot.add()
+
   lens.update_environment_map()
+  teapot.update_environment_map()
 
   camera.position.z = 5
   camera.lookAt(0, 0, 0)
@@ -69,6 +82,7 @@ let Demo = (function() {
     const elapsed = timestamp - prev //ms
 
     lens.update(timestamp)
+    teapot.update(timestamp)
 
     requestAnimationFrame(animate)
     renderer.render(scene, camera)

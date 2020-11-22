@@ -17,25 +17,12 @@ import { Mesh,
 import { BufferGeometryUtils } from
   '../node_modules/three/examples/jsm/utils/BufferGeometryUtils.js'
 
-export default class Lens {
-  constructor(scene, renderer) {
-    this.scene = scene
-    this.renderer = renderer
+import Element from './element.js'
 
-    this.prev = 0
-  }
-
+export default class Lens extends Element {
   add() {
-    this.scene.add(this.mesh())
-  }
-
-  mesh() {
-    if (this._mesh) return this._mesh
-
-    const mesh = new Mesh(this.geometry(), this.material())
-    mesh.castShadow = true
-
-    return this._mesh = mesh
+    super.add()
+    this.mesh().position.set(-2, 0, 0)
   }
 
   geometry() {
@@ -48,7 +35,7 @@ export default class Lens {
 
     const bottom_half = top_half.clone()
     bottom_half.rotateX(Math.PI)
-    bottom_half.translate(0, 0.52, 0)
+    bottom_half.translate(0, 0.5101, 0)
 
     const geom = BufferGeometryUtils.
       mergeBufferGeometries([top_half, bottom_half])
@@ -70,48 +57,15 @@ export default class Lens {
     return this._material = mat
   }
 
-  environment_map_target() {
-    if (this._environment_map_target) return this._environment_map_target
-
-    return this._environment_map_target = new WebGLCubeRenderTarget(128, {
-      format: RGBFormat,
-      generateMipmaps: true,
-      minFilter: LinearMipmapLinearFilter
-    })
-  }
-
-  environment_map_camera() {
-    if (this._environment_map_camera) return this._environment_map_camera
-
-    const cam = new CubeCamera(1, 10000, this.environment_map_target())
-    this.scene.add(cam)
-
-    return this._environment_map_camera = cam
-  }
-
-  environment_map() {
-    if (this._environment_map) return this._environment_map
-
-    return this.environment_map = this.environment_map_target().texture
-  }
-
   update(timestamp) {
+    super.update(timestamp)
     if (0 == this.prev) this.prev = timestamp
 
     let elapsed = timestamp - this.prev
     this.prev = timestamp
 
-    this.mesh().rotation.x += 0.001 * elapsed
-    this.mesh().rotation.z += 0.001 * elapsed
-  }
-
-  update_environment_map() {
-    const cam = this.environment_map_camera()
-    const mesh = this.mesh()
-    cam.position.copy(this.mesh().position)
-    mesh.visible = false
-    cam.update(this.renderer, this.scene)
-    mesh.visible = true
+    this.mesh().rotation.x += 0.0005 * elapsed
+    this.mesh().rotation.z += 0.0005 * elapsed
   }
 }
 
