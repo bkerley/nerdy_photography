@@ -14,4 +14,4 @@ enduring, individual, and universal. There are many kinds of photographic art,
 and I've only barely scratched the surface in my exploration of it.
 
 Nerdy Photography is absolutely not about the business of photography. I don't
-know about this and I don't really care to at this point.
+know about this at all.
