@@ -97,10 +97,31 @@ changing the distribution of electrons in a photographic medium, but the
 latent image
 is read out electrically, and the media can be reset and used again. Electronic
 imaging was being researched over a century ago, but its use has skyrocketed
-in the 21st century because computing is an unstoppable *katamari*[^katamari],
+in the 21st century. Computers became an
+unstoppable *katamari*[^katamari],
 rolling up and entangling photography with everything else computers are
 good at (communication, information storage, data processing, the group
 chat).
 
-[^katamari]: "clump," "塊," from "Katamari Damacy," the game about rolling up
+[^katamari]: "clump," "塊," from "Katamari Damacy," the funky pop-art
+    game about rolling up
     all the stuff in the world into a big ball.
+
+Digital photographic processing is a complex subject, and will be addressed
+in depth in a later chapter. The quick version, though, is that a processing
+step[^raw aside]
+takes the samples of jiggled electrons from the image sensor, contorts
+them into a grid of color samples[^little_square], usually compresses them
+(for efficiency at-rest and/or in-motion), and sends the now-image elsewhere,
+either to storage media or over a connection to another computer system.
+
+[^raw aside]: Processing the sensor samples into an image is almost always
+  done in camera because it's fun and useful to see the image immediately,
+  but yes, a "raw" (often capitalized "RAW") image has basically no processing
+  done to it on-camera. I *promise* this will come up more later :)
+[^little_square]: Not a little square, c.f.
+  [http://alvyray.com/Memos/CG/Microsoft/6_pixel.pdf] .
+
+The possibilities for digital photo processing are endless, but they're working
+with a slice of reality that was originally processed by the physical world
+of optics.
